@@ -9,7 +9,7 @@ export const projects = [
     link: '#',
     featured: false,
     year: '2024',
-    imageUrl: '/images/projects/project1.jpg',
+    imageUrl: './images/projects/project1.jpg',
     // 可选的扩展字段
     objectives: [
       'Create awareness about sustainable living',
@@ -32,7 +32,7 @@ export const projects = [
     link: '#',
     featured: true,
     year: '2024',
-    imageUrl: '/images/projects/project2.jpg',
+    imageUrl: './images/projects/project2.jpg',
     objectives: [
       'Create 5 distinct character personalities with visual storytelling',
       'Master Adobe Illustrator tools for vector illustration',
@@ -59,7 +59,7 @@ export const projects = [
     link: '#',
     featured: true,
     year: '2024',
-    imageUrl: '/images/projects/project3.jpg',
+    imageUrl: './images/projects/project3.jpg',
     objectives: [
       'Create an interactive hot pot ingredient browsing platform',
       'Implement user-friendly ingredient selection and favoriting system',
@@ -85,7 +85,7 @@ export const projects = [
     link: '#',
     featured: false,
     year: '2025',
-    imageUrl: '/images/projects/project4.jpg',
+    imageUrl: './images/projects/project4.jpg',
     objectives: [
       'Design an immersive VR experience in a Chinese garden setting',
       'Create atmospheric moonlit environment with traditional Chinese elements',
