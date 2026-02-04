@@ -148,9 +148,9 @@ export default function Portfolio() {
           <div className="mt-20 pt-12 border-t border-gray-200">
             <h3 className="text-2xl font-bold text-gray-900 mb-8">Projects by Year</h3>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {['2025', '2024', '2023', 'Older'].map((year) => {
+              {['2026','2025', '2024', 'Older'].map((year) => {
                 const yearProjects = projects.filter(p => 
-                  year === 'Older' ? p.year < '2023' : p.year === year
+                  year === 'Older' ? p.year < '2024' : p.year === year
                 );
                 return (
                   <div key={year} className="bg-gray-50 rounded-xl p-6">

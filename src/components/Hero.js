@@ -2,7 +2,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Sparkles, Code, Palette, Zap } from 'lucide-react';
+import { ArrowRight, Sparkles } from 'lucide-react';
+import heroImage from '../assets/images/home.png';
 
 export default function Hero() {
   return (
@@ -56,20 +57,6 @@ export default function Hero() {
               </Link>
             </div>
 
-            <div className="flex flex-wrap gap-8 mt-16">
-              {[
-                { icon: Palette, label: 'UI/UX Design', color: 'text-purple-600' },
-                { icon: Code, label: 'Web Development', color: 'text-blue-600' },
-                { icon: Zap, label: 'Digital Solutions', color: 'text-amber-600' },
-              ].map((item, index) => (
-                <div key={index} className="flex items-center gap-3">
-                  <div className={`p-2 rounded-lg bg-white shadow-sm ${item.color}`}>
-                    <item.icon size={20} />
-                  </div>
-                  <span className="font-medium text-gray-700">{item.label}</span>
-                </div>
-              ))}
-            </div>
           </motion.div>
 
           <motion.div
@@ -79,7 +66,13 @@ export default function Hero() {
             className="relative"
           >
             <div className="relative z-10">
-              <div className="aspect-square rounded-3xl overflow-hidden bg-gradient-to-br from-gray-900 to-gray-800 shadow-2xl">
+              <div className="aspect-square rounded-3xl overflow-hidden shadow-2xl">
+                {/* 替换为你的图片 */}
+                <img 
+                  src={heroImage} 
+                  alt="Currently Working On"
+                  className="w-full h-full object-cover"
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
                 <div className="absolute bottom-8 left-8 text-white">
                   <p className="text-sm font-light opacity-90">Currently Working On</p>

@@ -5,13 +5,12 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Sparkles, Palette, Code, Zap, ChevronRight } from 'lucide-react';
 import Hero from '../components/Hero';
 import ProjectCard from '../components/ProjectCard';
-import { projects } from '../data/projects';  // 从数据文件导入
+import { projects } from '../data/projects';
 
 export default function Home() {
-  // 直接从数据中获取特色项目
   const featuredProjects = projects
-    .filter(project => project.featured)  // 只选择 featured: true 的项目
-    .slice(0, 2);  // 只取前2个
+    .filter(project => project.featured)
+    .slice(0, 2);
 
   const services = [
     {
@@ -28,8 +27,8 @@ export default function Home() {
     },
     {
       icon: Zap,
-      title: 'Digital Strategy',
-      description: 'Developing comprehensive digital strategies that align with business goals and user needs.',
+      title: 'Software Testing and Analytics',
+      description: 'Ensuring software quality through comprehensive testing and data-driven insights for optimal performance.',
       color: 'from-amber-500 to-orange-500'
     }
   ];
@@ -78,7 +77,54 @@ export default function Home() {
         </div>
       </section>
 
-      
+      {/* Services Section */}
+      <section className="py-24 bg-gradient-to-br from-gray-50 to-gray-100">
+        <div className="max-w-7xl mx-auto px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-50 to-purple-50 rounded-full mb-6">
+              <Sparkles size={16} className="text-primary" />
+              <span className="text-sm font-medium text-gray-700">What I Offer</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+              My <span className="text-gradient">Services</span>
+            </h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Comprehensive digital solutions tailored to your unique needs and business objectives.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {services.map((service, index) => {
+              const Icon = service.icon;
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.2 }}
+                  viewport={{ once: true }}
+                  className="group relative"
+                >
+                  <div className="relative bg-white rounded-2xl p-8 transition-all duration-300 border border-gray-200 group-hover:border-transparent">
+                    <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${service.color} rounded-t-2xl`} />
+                    <div className={`inline-flex p-4 bg-gradient-to-r ${service.color} rounded-xl mb-6`}>
+                      <Icon size={28} className="text-white" />
+                    </div>
+                    <h3 className="text-2xl font-bold text-gray-900 mb-4">{service.title}</h3>
+                    <p className="text-gray-600">{service.description}</p>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
 
       {/* CTA Section */}
       <section className="py-24 bg-gradient-to-br from-gray-900 to-gray-800">
@@ -106,6 +152,13 @@ export default function Home() {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                to="/contact"
+                className="group inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-full font-medium hover:from-blue-600 hover:to-cyan-600 transition-all duration-300 shadow-lg hover:shadow-xl"
+              >
+                <span>Start a Project</span>
+                <ArrowRight size={20} className="group-hover:translate-x-2 transition-transform" />
+              </Link>
               
               <Link
                 to="/about"

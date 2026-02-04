@@ -7,30 +7,68 @@ import {
   ExternalLink, 
   Calendar, 
   Folder, 
-  Code, 
-  ChevronRight,
+  Code,
   Globe,
   Target,
   Award,
   Clock,
   User,
   CheckCircle,
-  AlertTriangle
+  AlertTriangle,
+  FileText,
+  Download,
+  File,
+  Image,
+  Video,
+  FileArchive,
+  FileCode,
+  FileType
 } from 'lucide-react';
 import { projects } from '../data/projects';
+
+// 文件类型图标映射
+const getFileIcon = (fileType) => {
+  const iconMap = {
+    pdf: <FileText className="text-red-500" size={20} />,
+    ai: <File className="text-orange-500" size={20} />,
+    jpg: <Image className="text-green-500" size={20} />,
+    png: <Image className="text-green-500" size={20} />,
+    mp4: <Video className="text-purple-500" size={20} />,
+    unitypackage: <FileArchive className="text-blue-500" size={20} />,
+    docx: <FileText className="text-blue-600" size={20} />,
+    sql: <FileCode className="text-gray-600" size={20} />,
+    fig: <File className="text-pink-500" size={20} />,
+    default: <FileType className="text-gray-500" size={20} />
+  };
+  
+  return iconMap[fileType.toLowerCase()] || iconMap.default;
+};
+
+// 文件类型文本格式化
+const formatFileType = (fileType) => {
+  const typeMap = {
+    pdf: 'PDF Document',
+    ai: 'Adobe Illustrator',
+    jpg: 'Image',
+    png: 'Image',
+    mp4: 'Video',
+    unitypackage: 'Unity Package',
+    docx: 'Word Document',
+    sql: 'SQL File',
+    fig: 'Figma File',
+    default: 'File'
+  };
+  
+  return typeMap[fileType.toLowerCase()] || fileType.toUpperCase();
+};
 
 export default function ProjectDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const projectId = parseInt(id);
   
-  // 查找项目
+  // Find project
   const project = projects.find(p => p.id === projectId);
-  
-  // 相关项目（同分类的其他项目）
-  const relatedProjects = projects
-    .filter(p => p.id !== projectId && p.category === project?.category)
-    .slice(0, 2);
 
   if (!project) {
     return (
@@ -51,6 +89,8 @@ export default function ProjectDetail() {
   }
 
   const defaultImage = 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&auto=format&fit=crop';
+  const hasLink = project.link && project.link !== '#';
+  const hasAttachments = project.attachments && project.attachments.length > 0;
 
   return (
     <div className="min-h-screen bg-white pt-24">
@@ -116,16 +156,26 @@ export default function ProjectDetail() {
 
             {/* Action Buttons */}
             <div className="flex flex-wrap gap-4 mb-16">
-              {project.link && project.link !== '#' && (
-                <a
-                  href={project.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-primary to-secondary text-white rounded-full font-medium hover:shadow-xl hover:shadow-primary/25 transition-all"
+              {hasLink ? (
+                <>
+                  <a
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-primary to-secondary text-white rounded-full font-medium hover:shadow-xl hover:shadow-primary/25 transition-all"
+                  >
+                    <Globe size={20} />
+                    <span>View Project</span>
+                  </a>
+                </>
+              ) : (
+                <button
+                  disabled
+                  className="inline-flex items-center gap-3 px-8 py-4 bg-gray-100 text-gray-400 rounded-full font-medium cursor-not-allowed"
                 >
                   <Globe size={20} />
-                  <span>View Project</span>
-                </a>
+                  <span>Project Link Unavailable</span>
+                </button>
               )}
             </div>
           </motion.div>
@@ -150,7 +200,7 @@ export default function ProjectDetail() {
                 </h2>
                 
                 <div className="prose prose-lg max-w-none">
-                  {/* 显示项目目标 */}
+                  {/* Display project objectives */}
                   {project.objectives && project.objectives.length > 0 && (
                     <>
                       <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-6">Objectives</h3>
@@ -165,7 +215,7 @@ export default function ProjectDetail() {
                     </>
                   )}
                   
-                  {/* 显示项目挑战 */}
+                  {/* Display project challenges */}
                   {project.challenges && project.challenges.length > 0 && (
                     <>
                       <h3 className="text-2xl font-bold text-gray-900 mt-12 mb-6">Challenges & Solutions</h3>
@@ -179,10 +229,54 @@ export default function ProjectDetail() {
                       </ul>
                     </>
                   )}
+
+                  {/* Attachments Section */}
+                  {hasAttachments && (
+                    <>
+                      <h3 className="text-2xl font-bold text-gray-900 mt-12 mb-6">Project Attachments</h3>
+                      <div className="space-y-3 mb-8">
+                        {project.attachments.map((attachment) => (
+                          <div
+                            key={attachment.id}
+                            className="group flex items-center gap-4 p-4 bg-white rounded-xl border border-gray-200 hover:border-primary/30 hover:shadow-md transition-all duration-200"
+                          >
+                            <div className="flex-shrink-0">
+                              {getFileIcon(attachment.type)}
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center justify-between">
+                                <div>
+                                  <h4 className="font-medium text-gray-900 truncate">
+                                    {attachment.name}
+                                  </h4>
+                                  <p className="text-sm text-gray-500 mt-1">
+                                    {formatFileType(attachment.type)} • {attachment.size}
+                                  </p>
+                                </div>
+                                <div className="flex items-center gap-2 ml-4">
+                                  <a
+                                    href={attachment.path}
+                                    download={attachment.fileName}
+                                    className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary/10 to-secondary/10 text-primary rounded-lg font-medium hover:from-primary/20 hover:to-secondary/20 transition-all group-hover:scale-105"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                  >
+                                    <Download size={16} />
+                                    Download
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </>
+                  )}
                   
-                  {/* 如果没有目标和挑战，显示默认描述 */}
+                  {/* Show default description if no objectives, challenges or attachments */}
                   {(!project.objectives || project.objectives.length === 0) && 
-                   (!project.challenges || project.challenges.length === 0) && (
+                   (!project.challenges || project.challenges.length === 0) &&
+                   (!hasAttachments) && (
                     <p className="text-gray-600 mb-6">
                       This project showcases my skills in {project.category.toLowerCase()}, 
                       utilizing modern design principles and technologies to create an engaging user experience.
@@ -262,6 +356,19 @@ export default function ProjectDetail() {
                         <div className="font-medium text-gray-900">{project.role}</div>
                       </div>
                     )}
+
+                    {/* Attachments Count */}
+                    {hasAttachments && (
+                      <div>
+                        <div className="flex items-center gap-2 text-sm text-gray-500 mb-1">
+                          <FileText size={14} />
+                          <span>Attachments</span>
+                        </div>
+                        <div className="font-medium text-gray-900">
+                          {project.attachments.length} file{project.attachments.length > 1 ? 's' : ''}
+                        </div>
+                      </div>
+                    )}
                     
                     {/* Status */}
                     <div>
@@ -273,21 +380,23 @@ export default function ProjectDetail() {
                       </div>
                     </div>
                     
-                    {/* Live Demo Link */}
-                    {project.link && project.link !== '#' && (
-                      <div>
-                        <div className="text-sm text-gray-500 mb-2">Live Demo</div>
+                    {/* Live Demo Status */}
+                    <div>
+                      <div className="text-sm text-gray-500 mb-1">Live Demo</div>
+                      {hasLink ? (
                         <a
                           href={project.link}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="inline-flex items-center gap-2 text-primary font-medium hover:gap-3 transition-all"
                         >
-                          <span>Visit Project</span>
+                          <span>Available</span>
                           <ExternalLink size={16} />
                         </a>
-                      </div>
-                    )}
+                      ) : (
+                        <div className="text-gray-400 font-medium">Unavailable</div>
+                      )}
+                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -295,59 +404,6 @@ export default function ProjectDetail() {
           </div>
         </div>
       </section>
-
-      {/* Related Projects */}
-      {relatedProjects.length > 0 && (
-        <section className="py-20 bg-white">
-          <div className="max-w-7xl mx-auto px-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-            >
-              <h2 className="text-3xl font-bold text-gray-900 mb-12">Related Projects</h2>
-              <div className="grid md:grid-cols-2 gap-8">
-                {relatedProjects.map((relatedProject) => (
-                  <div
-                    key={relatedProject.id}
-                    className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100"
-                  >
-                    <div className="aspect-video relative overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
-                      <img
-                        src={relatedProject.imageUrl || defaultImage}
-                        alt={relatedProject.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                        onError={(e) => {
-                          e.target.onerror = null;
-                          e.target.src = defaultImage;
-                        }}
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    </div>
-                    <div className="p-6">
-                      <span className="inline-block px-3 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded-full mb-3">
-                        {relatedProject.category}
-                      </span>
-                      <h3 className="text-xl font-bold text-gray-900 mb-2">{relatedProject.title}</h3>
-                      <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-                        {relatedProject.description}
-                      </p>
-                      <Link
-                        to={`/portfolio/${relatedProject.id}`}
-                        className="inline-flex items-center gap-2 text-primary font-medium hover:gap-3 transition-all text-sm"
-                      >
-                        <span>View Project</span>
-                        <ChevronRight size={16} />
-                      </Link>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-        </section>
-      )}
 
       {/* Navigation */}
       <section className="py-20 bg-gray-50">
