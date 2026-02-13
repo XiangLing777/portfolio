@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/portfolio/static/css/main.68486b72.css",
-    "main.js": "/portfolio/static/js/main.db422516.js",
+    "main.js": "/portfolio/static/js/main.f126ab31.js",
     "static/media/project3.jpg": "/portfolio/static/media/project3.c93e7553c2bdaffb444c.jpg",
     "static/media/project3_2.jpg": "/portfolio/static/media/project3_2.db25dd530102e0d7f531.jpg",
     "static/media/project5.jpg": "/portfolio/static/media/project5.d02a72016cc0197b79b7.jpg",
@@ -19,14 +19,18 @@
     "static/media/project7.jpg": "/portfolio/static/media/project7.4a12a39da9c8f59a9d02.jpg",
     "static/media/project5_4.jpg": "/portfolio/static/media/project5_4.f64a147c1a6c0cfde205.jpg",
     "static/media/project2.jpg": "/portfolio/static/media/project2.78fc6fa8bae8003f95f2.jpg",
+    "static/media/React_Native.png": "/portfolio/static/media/React_Native.afecdec6503c92fefc0f.png",
+    "static/media/Modern.png": "/portfolio/static/media/Modern.f8c2a00093f6e075480c.png",
+    "static/media/Testing.png": "/portfolio/static/media/Testing.c6dd119d5ea3744f698b.png",
     "static/media/project7_2.jpg": "/portfolio/static/media/project7_2.c4ef2b9eae20a29e5317.jpg",
+    "static/media/UX.png": "/portfolio/static/media/UX.1bbb2567495660135d45.png",
     "static/media/project3_4.jpg": "/portfolio/static/media/project3_4.f95dd3e489148b8222d8.jpg",
     "index.html": "/portfolio/index.html",
     "main.68486b72.css.map": "/portfolio/static/css/main.68486b72.css.map",
-    "main.db422516.js.map": "/portfolio/static/js/main.db422516.js.map"
+    "main.f126ab31.js.map": "/portfolio/static/js/main.f126ab31.js.map"
   },
   "entrypoints": [
     "static/css/main.68486b72.css",
-    "static/js/main.db422516.js"
+    "static/js/main.f126ab31.js"
   ]
 }
